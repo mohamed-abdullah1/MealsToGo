@@ -20,7 +20,6 @@ const SpacerView = styled.View`
 `;
 
 export const Spacer = ({ position = "left", size = "small", children }) => {
-  console.log("👉", { position, size });
   return (
     <SpacerView p={position} s={size}>
       {children}

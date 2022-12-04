@@ -17,8 +17,6 @@ import {
 const RestaurantInfo = ({ restaurant = {} }) => {
   const { name, photos, address, isOpeningNow, rating, icon, isClosedTemp } =
     restaurant;
-  console.log("👉", { restaurant });
-  console.log("👉", rating);
   const starts = Array.from(new Array(Math.round(rating)));
   return (
     <Wrapper>
