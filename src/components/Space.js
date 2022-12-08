@@ -1,6 +1,4 @@
 import React from "react-native";
-import { View } from "react-native";
-import { useTheme } from "styled-components/native";
 import styled from "styled-components/native";
 
 const positionVariants = {

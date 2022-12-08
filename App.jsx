@@ -1,10 +1,9 @@
 //imports
+import React from "react";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Restaurant from "./src/features/resturents/screens/Restaurant.screen";
+
 import { ThemeProvider } from "styled-components/native";
 import theme from "./src/infrastructure/theme";
-import { Text } from "react-native";
 import {
   useFonts as useOswald,
   Oswald_400Regular,
@@ -15,28 +14,11 @@ import {
   Lato_400Regular,
   Lato_700Bold,
 } from "@expo-google-fonts/lato";
-import { NavigationContainer } from "@react-navigation/native";
-import { SafeArea } from "./src/components/SafeArea";
-import { Ionicons } from "@expo/vector-icons";
 import { RestaurantsProvider } from "./src/services/restaurants/restaurants.context";
-const TABS_ICONS = {
-  Restaurant: "pizza",
-  Map: "map",
-  Settings: "settings",
-};
+import { LocationProvider } from "./src/services/location/location.context";
+import { Navigation } from "./src/infrastructure/navigation";
 
-const Tab = createBottomTabNavigator();
-const Setting = () => (
-  <SafeArea>
-    <Text>Setting</Text>
-  </SafeArea>
-);
-const Map = () => (
-  <SafeArea>
-    <Text>Map</Text>
-  </SafeArea>
-);
-
+//main App ====================================//
 export default function App() {
   const [oswaldLoaded] = useOswald({
     Oswald_400Regular,
@@ -51,34 +33,13 @@ export default function App() {
     return null;
   }
   return (
-    <RestaurantsProvider>
-      <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <>
-            {/* <Tab.Navigator> */}
-            <Tab.Navigator
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ color, size }) => {
-                  return (
-                    <Ionicons
-                      name={TABS_ICONS[route.name]}
-                      size={size}
-                      color={color}
-                    />
-                  );
-                },
-                tabBarActiveTintColor: "tomato",
-                tabBarInactiveTintColor: "gray",
-              })}
-            >
-              <Tab.Screen name="Restaurant" component={Restaurant} />
-              <Tab.Screen name="Map" component={Map} />
-              <Tab.Screen name="Settings" component={Setting} />
-            </Tab.Navigator>
-          </>
-        </NavigationContainer>
-        <ExpoStatusBar style="auto" />
-      </ThemeProvider>
-    </RestaurantsProvider>
+    <LocationProvider>
+      <RestaurantsProvider>
+        <ThemeProvider theme={theme}>
+          <Navigation />
+          <ExpoStatusBar style="auto" />
+        </ThemeProvider>
+      </RestaurantsProvider>
+    </LocationProvider>
   );
 }

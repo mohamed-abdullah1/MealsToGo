@@ -1,3 +1,4 @@
+import styled from "styled-components/native";
 const defaultText = (theme) => `
     font-family : ${theme.fonts.body};
     font-size : ${theme.fontSizes.body};

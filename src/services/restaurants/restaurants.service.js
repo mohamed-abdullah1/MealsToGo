@@ -3,7 +3,11 @@ import { mockImages, mocks } from "./mock";
 
 export const restaurantsRequest = (location = "43.653225,-79.383186") => {
   return new Promise((resolve, reject) => {
-    const mock = mocks[location];
+    let mock = [];
+    if (!location) {
+      location = "43.653225,-79.383186";
+    }
+    mock = mocks[location];
     if (!mock) {
       reject("Not Found");
     }

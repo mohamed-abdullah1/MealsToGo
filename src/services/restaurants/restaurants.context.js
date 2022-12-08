@@ -1,4 +1,11 @@
-import { createContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { LocationContext } from "../location/location.context";
 import {
   restaurantsRequest,
   restaurantsTransformation,
@@ -8,44 +15,36 @@ export const RestaurantsContext = createContext();
 
 export const RestaurantsProvider = ({ children }) => {
   const [restaurants, setRestaurants] = useState([]);
-  const [temporaryRestaurants, setTemporaryRestaurants] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const retrieveRestaurants = () => {
+  const { location } = useContext(LocationContext);
+  const retrieveRestaurants = useCallback(() => {
     setLoading(true);
     setTimeout(() => {
-      restaurantsRequest()
+      console.log("👉location changed", location);
+      restaurantsRequest(location)
         .then(restaurantsTransformation)
         .then((res) => {
           setError("");
-          console.log("👉", res);
           setRestaurants(res);
-          setTemporaryRestaurants(res);
         })
         .catch((err) => {
+          console.log("👉", err);
           setError(err);
         })
         .finally(() => setLoading(false));
     }, 2000);
-  };
-  const searchRestaurant = (query) => {
-    setRestaurants(
-      temporaryRestaurants.filter((restaurant) =>
-        restaurant.name.toLowerCase().includes(query.toLowerCase())
-      )
-    );
-  };
+  }, [location]);
+
   useEffect(() => {
     retrieveRestaurants();
-  }, []);
+  }, [location, retrieveRestaurants]);
   return (
     <RestaurantsContext.Provider
       value={{
         restaurants,
         loading,
         error,
-        searchRestaurant,
       }}
     >
       {children}
