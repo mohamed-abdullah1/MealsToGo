@@ -1,5 +1,5 @@
-import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
-import { Card, Paragraph, Title } from "react-native-paper";
+import { Text, Image } from "react-native";
+import { Card } from "react-native-paper";
 import { SvgXml } from "react-native-svg";
 import star from "../../../../assets/star.js";
 import open from "../../../../assets/open";
@@ -14,6 +14,8 @@ import {
   SvgContainer,
   OpenContainer,
 } from "./restaurant-info.styles";
+import React from "react";
+import Favorite from "../../../components/Favorite.js";
 const RestaurantInfo = ({ restaurant = {} }) => {
   const { name, photos, address, isOpeningNow, rating, icon, isClosedTemp } =
     restaurant;
@@ -21,6 +23,7 @@ const RestaurantInfo = ({ restaurant = {} }) => {
   return (
     <Wrapper>
       <MealCard elevation={5} mode="elevated">
+        <Favorite restaurant={restaurant} />
         <MealCover elevation={5} source={{ uri: photos[0] }} />
         <Card.Content>
           <MealTitle>{name}</MealTitle>

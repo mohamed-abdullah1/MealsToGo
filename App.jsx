@@ -17,6 +17,7 @@ import {
 import { RestaurantsProvider } from "./src/services/restaurants/restaurants.context";
 import { LocationProvider } from "./src/services/location/location.context";
 import { Navigation } from "./src/infrastructure/navigation";
+import { FavoritesProvider } from "./src/services/favorites/favorites.context";
 
 //main App ====================================//
 export default function App() {
@@ -33,13 +34,15 @@ export default function App() {
     return null;
   }
   return (
-    <LocationProvider>
-      <RestaurantsProvider>
-        <ThemeProvider theme={theme}>
-          <Navigation />
-          <ExpoStatusBar style="auto" />
-        </ThemeProvider>
-      </RestaurantsProvider>
-    </LocationProvider>
+    <FavoritesProvider>
+      <LocationProvider>
+        <RestaurantsProvider>
+          <ThemeProvider theme={theme}>
+            <Navigation />
+            <ExpoStatusBar style="auto" />
+          </ThemeProvider>
+        </RestaurantsProvider>
+      </LocationProvider>
+    </FavoritesProvider>
   );
 }

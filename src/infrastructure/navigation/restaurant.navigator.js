@@ -14,10 +14,8 @@ export const RestaurantNavigator = () => {
     <RestaurantStack.Navigator
       screenOptions={{
         headerShown: false,
-        ...TransitionPresets.ModalSlideFromBottomIOS,
+        ...TransitionPresets.ModalPresentationIOS,
         cardOverlayEnabled: false,
-        cardStyle: { color: "red" },
-        gestureEnabled: true,
       }}
     >
       <RestaurantStack.Screen name="Restaurant" component={Restaurant} />

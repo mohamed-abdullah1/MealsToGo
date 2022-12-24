@@ -1,8 +1,8 @@
 import styled from "styled-components/native";
 const defaultText = (theme) => `
-    font-family : ${theme.fonts.body};
-    font-size : ${theme.fontSizes.body};
-    font-weight:${theme.fontWeight.regular};
+    font-family : ${theme?.fonts.body};
+    font-size : ${theme?.fontSizes.body};
+    font-weight:${theme?.fontWeights.regular};
     flex-wrap:wrap;
     margin:0;
     padding:0;
@@ -35,8 +35,8 @@ const variants = {
   hint,
 };
 export const Text = styled.Text`
-  ${({ theme }) => defaultText(theme)}
-  ${({ variant, theme }) => variants[variant](theme)}
+  ${({ theme }) => defaultText(theme)};
+  ${({ variant, theme }) => variants[variant](theme)};
 `;
 Text.defaultProps = {
   variant: "body",

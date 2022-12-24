@@ -1,14 +1,44 @@
-import React from "react";
-import { Card, Paragraph, Title, Button } from "react-native-paper";
-import { Wrapper } from "../components/RestaurantDetails.styles";
+import React, { useState } from "react";
+import { ScrollView, View } from "react-native";
+import { List } from "react-native-paper";
+import RestaurantInfo from "../components/restaurant-info.component";
+import Favorite from "../../../components/Favorite";
+
+const ListIcon = (iconName) => {
+  return (props) => <List.Icon icon={iconName} {...props} />;
+};
 const RestaurantDetails = ({ route }) => {
-  const { address, icon, photos, rating, name } = route.params;
+  const { restaurant } = route.params;
+  const [expanded, setExpanded] = useState();
   return (
-    <Wrapper>
-      <Card elevation={5}>
-        <Card.Cover source={{ uri: photos[0] }} />
-      </Card>
-    </Wrapper>
+    <ScrollView>
+      <RestaurantInfo restaurant={restaurant} />
+      <List.Section>
+        <List.Accordion title="Breakfast" left={ListIcon("bread-slice")}>
+          <List.Item title="First item" />
+          <List.Item title="Second item" />
+        </List.Accordion>
+
+        <List.Accordion
+          title="Lunch"
+          left={ListIcon("rice")}
+          expanded={expanded}
+          onPress={setExpanded}
+        >
+          <List.Item title="First item" />
+          <List.Item title="Second item" />
+        </List.Accordion>
+        <List.Accordion
+          title="Dinner"
+          left={ListIcon("food-drumstick")}
+          expanded={expanded}
+          onPress={setExpanded}
+        >
+          <List.Item title="First item" />
+          <List.Item title="Second item" />
+        </List.Accordion>
+      </List.Section>
+    </ScrollView>
   );
 };
 

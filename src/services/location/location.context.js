@@ -7,6 +7,7 @@ export const LocationContext = createContext({
   error: null,
   onSearch: () => {},
   location: "",
+  viewport: null,
 });
 export const LocationProvider = ({ children }) => {
   const [keyword, setKeyword] = useState("");
@@ -14,9 +15,10 @@ export const LocationProvider = ({ children }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const onSearch = (key) => {
+    console.log("👉 from on search ", key);
     setKeyword(key);
   };
-
+  const [viewport, setViewport] = useState(null);
   useEffect(() => {
     if (!keyword) {
       setLocation(""); //TODO DELETE IT
@@ -25,23 +27,26 @@ export const LocationProvider = ({ children }) => {
     setLoading(true);
     locationRequest(keyword.toLowerCase())
       .then(locationTransform)
-      .then(({ lng, lat }) => {
+      .then(({ lng, lat, viewport }) => {
         const formattedLoc = `${lat},${lng}`;
         setLocation(formattedLoc);
+        setViewport(viewport);
       })
       .catch((err) => {
         setError(err);
-        console.error(err);
+        console.log(err);
       })
       .finally(() => setLoading(false));
   }, [keyword]);
   return (
     <LocationContext.Provider
       value={{
+        keyword,
         loading,
         error,
         onSearch,
         location,
+        viewport,
       }}
     >
       {children}
