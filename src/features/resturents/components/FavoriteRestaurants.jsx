@@ -4,23 +4,30 @@ import styled from "styled-components/native";
 import { FavoritesContext } from "../../../services/favorites/favorites.context";
 import MiniRestaurantCard from "../../../components/MiniRestaurantCard";
 const Container = styled(ScrollView)`
-  height: 150px;
+  height: 130px;
   flex-direction: row;
-  padding: 16px 0;
+  padding: 8px 0;
 `;
-
-const FavoriteRestaurants = () => {
+const Title = styled.Text`
+  padding: 8px 0 0 16px;
+`;
+const FavoriteRestaurants = ({ navigation }) => {
   const { favorites } = useContext(FavoritesContext);
+  if (favorites.length === 0) {
+    return;
+  }
   return (
     <View>
-      <Container horizontal={true}>
-        {favorites.length > 0 ? (
+      <Title>Favorites</Title>
+      <Container horizontal={true} showHorizontalScrollIndicator={false}>
+        {favorites.length > 0 &&
           favorites.map((fav) => (
-            <MiniRestaurantCard key={fav.name} restaurant={fav} />
-          ))
-        ) : (
-          <Text>Nothing...</Text>
-        )}
+            <MiniRestaurantCard
+              navigation={navigation}
+              key={fav.name}
+              restaurant={fav}
+            />
+          ))}
       </Container>
     </View>
   );

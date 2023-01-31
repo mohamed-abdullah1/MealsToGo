@@ -65,4 +65,4 @@ const RestaurantInfo = ({ restaurant = {} }) => {
   );
 };
 
-export default RestaurantInfo;
+export default React.memo(RestaurantInfo);

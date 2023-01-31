@@ -1,9 +1,7 @@
 import React from "react";
-import { Image, Text } from "react-native";
 import { Svg, Image as ImageSvg } from "react-native-svg";
-import WebView from "react-native-webview";
 import styled from "styled-components/native";
-
+import Favorite from "../../../components/Favorite";
 const Container = styled.View`
   flex: 1;
   align-items: center;
@@ -26,6 +24,7 @@ const MapCallout = ({ restaurant }) => {
   return (
     <Container>
       <Svg width={100} height={100}>
+        <Favorite restaurant={restaurant} />
         <Img
           width={"100%"}
           height={"100%"}

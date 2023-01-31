@@ -18,7 +18,7 @@ export const RestaurantNavigator = () => {
         cardOverlayEnabled: false,
       }}
     >
-      <RestaurantStack.Screen name="Restaurant" component={Restaurant} />
+      <RestaurantStack.Screen name="Restaurants" component={Restaurant} />
       <RestaurantStack.Screen
         name="RestaurantDetails"
         component={RestaurantDetails}

@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   StyleSheet,
-  // Text,
   View,
   FlatList,
   ActivityIndicator,
-  TouchableOpacity,
   Pressable,
 } from "react-native";
 import styled from "styled-components/native";
@@ -16,6 +14,8 @@ import { SafeArea } from "../../../components/SafeArea";
 import { RestaurantsContext } from "../../../services/restaurants/restaurants.context";
 import { LocationContext } from "../../../services/location/location.context";
 import FavoriteRestaurants from "../components/FavoriteRestaurants";
+import { FavoritesContext } from "../../../services/favorites/favorites.context";
+import { ScrollView } from "react-native-gesture-handler";
 const FlatListContainer = styled(FlatList)`
   background-color: white;
   padding-bottom: 16px;
@@ -27,9 +27,17 @@ const LoadingContainer = styled.View`
   align-items: center;
 `;
 const SearchContainer = styled.View`
-  padding: 5px;
-  margin-bottom: 8px;
-  flex: ${(props) => (props.viewFavList ? "6" : "1")};
+  padding: 16px 16px 0 16px;
+  flex: ${(props) => (props.viewFavList ? "3" : "0")};
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9000;
+  width: 100%;
+  background-color: white;
+`;
+const RestaurantsWrapper = styled(ScrollView)`
+  margin-top: 64px;
 `;
 const Restaurant = ({ navigation }) => {
   const [viewFavList, setViewList] = useState(false);
@@ -39,6 +47,7 @@ const Restaurant = ({ navigation }) => {
     keyword,
     loading: loadingLoc,
   } = useContext(LocationContext);
+  const { favorites } = useContext(FavoritesContext);
   useEffect(() => {
     let timeId = setTimeout(() => {
       onSearch(keyword);
@@ -47,6 +56,29 @@ const Restaurant = ({ navigation }) => {
       clearTimeout(timeId);
     };
   }, [keyword, onSearch]);
+  const renderItem = (itemData) => {
+    return (
+      <Pressable
+        android_ripple={{ color: "red" }} //for android
+        style={(pressedData) => pressedData.pressed}
+        onPress={() =>
+          navigation.navigate("RestaurantDetails", {
+            restaurant: itemData.item,
+          })
+        }
+      >
+        <View style={styles.meals}>
+          <RestaurantInfo restaurant={itemData.item} />
+        </View>
+      </Pressable>
+    );
+  };
+  const memoizedRenderItem = useMemo(() => renderItem, [restaurants]);
+  useEffect(() => {
+    if (favorites.length === 0) {
+      setViewList(false);
+    }
+  }, [favorites]);
   return (
     <SafeArea style={styles.container}>
       <SearchContainer viewFavList={viewFavList}>
@@ -56,37 +88,39 @@ const Restaurant = ({ navigation }) => {
           onChangeText={onSearch}
           loading={true}
           style={{ margin: 4 }}
-          icon="heart"
+          icon={favorites.length > 0 ? "heart" : "heart-outline"}
           onIconPress={() => setViewList((prev) => !prev)}
         />
-        <FavoriteRestaurants />
+        {viewFavList && <FavoriteRestaurants navigation={navigation} />}
       </SearchContainer>
       {loading || loadingLoc ? (
         <LoadingContainer>
           <ActivityIndicator size={50} color="tomato" />
         </LoadingContainer>
       ) : (
-        <FlatListContainer
-          data={restaurants}
-          keyExtractor={(item) => item.placeId}
-          renderItem={(itemData) => {
-            return (
-              <Pressable
-                android_ripple={{ color: "red" }} //for android
-                style={(pressedData) => pressedData.pressed}
-                onPress={() =>
-                  navigation.navigate("RestaurantDetails", {
-                    restaurant: itemData.item,
-                  })
-                }
-              >
-                <View style={styles.meals}>
-                  <RestaurantInfo restaurant={itemData.item} />
-                </View>
-              </Pressable>
-            );
-          }}
-        />
+        // <FlatListContainer
+        //   data={restaurants}
+        //   keyExtractor={(item) => item.placeId}
+        //   renderItem={memoizedRenderItem}
+        // />
+        <RestaurantsWrapper>
+          {restaurants.map((res) => (
+            <Pressable
+              key={res.name}
+              android_ripple={{ color: "red" }} //for android
+              style={(pressedData) => pressedData.pressed}
+              onPress={() =>
+                navigation.navigate("RestaurantDetails", {
+                  restaurant: res,
+                })
+              }
+            >
+              <View style={styles.meals}>
+                <RestaurantInfo restaurant={res} />
+              </View>
+            </Pressable>
+          ))}
+        </RestaurantsWrapper>
       )}
     </SafeArea>
   );
@@ -99,6 +133,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 16,
     flex: 8,
+    border: "solid red 1px",
   },
   text: {
     color: "#ffffff",

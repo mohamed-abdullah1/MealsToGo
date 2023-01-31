@@ -23,7 +23,6 @@ const MapScreen = ({ navigation }) => {
       const { southwest, northeast } = viewport;
       const delta = northeast.lat - southwest.lat;
       const [latVal, lngVal] = location.split(",").map((ele) => +ele);
-      console.log("👉lat-lng", { latVal: typeof latVal, lngVal });
       setLatLoc(latVal);
       setLngLoc(lngVal);
       setLatDelta(delta);

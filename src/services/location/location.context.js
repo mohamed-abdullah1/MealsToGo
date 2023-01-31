@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { createContext, useEffect, useState } from "react";
 import { locationRequest, locationTransform } from "./location.service";
 
@@ -14,14 +14,12 @@ export const LocationProvider = ({ children }) => {
   const [location, setLocation] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const onSearch = (key) => {
-    console.log("👉 from on search ", key);
+  const onSearch = useCallback((key) => {
     setKeyword(key);
-  };
+  }, []);
   const [viewport, setViewport] = useState(null);
   useEffect(() => {
     if (!keyword) {
-      setLocation(""); //TODO DELETE IT
       return;
     } //do nothing
     setLoading(true);
@@ -34,7 +32,7 @@ export const LocationProvider = ({ children }) => {
       })
       .catch((err) => {
         setError(err);
-        console.log(err);
+        console.error(err);
       })
       .finally(() => setLoading(false));
   }, [keyword]);

@@ -15,7 +15,6 @@ const SearchContainer = styled.View`
 const SearchBarEle = styled(Searchbar)``;
 const Search = () => {
   const { onSearch, keyword } = useContext(LocationContext);
-  console.log("👉", "from Search on map", keyword);
   return (
     <SearchContainer>
       <SearchBarEle

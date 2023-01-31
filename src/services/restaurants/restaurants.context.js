@@ -21,7 +21,6 @@ export const RestaurantsProvider = ({ children }) => {
   const retrieveRestaurants = useCallback(() => {
     setLoading(true);
     setTimeout(() => {
-      console.log("👉location changed", location);
       restaurantsRequest(location)
         .then(restaurantsTransformation)
         .then((res) => {
@@ -29,7 +28,7 @@ export const RestaurantsProvider = ({ children }) => {
           setRestaurants(res);
         })
         .catch((err) => {
-          console.log("👉", err);
+          console.error("👉", err);
           setError(err);
         })
         .finally(() => setLoading(false));
