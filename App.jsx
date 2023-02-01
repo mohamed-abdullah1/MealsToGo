@@ -18,11 +18,10 @@ import { RestaurantsProvider } from "./src/services/restaurants/restaurants.cont
 import { LocationProvider } from "./src/services/location/location.context";
 import { Navigation } from "./src/infrastructure/navigation";
 import { FavoritesProvider } from "./src/services/favorites/favorites.context";
-import useAuth from "./src/services/firebase/useAuth";
+import AuthProvider from "./src/services/authentication/auth.context";
 
 //main App ====================================//
 export default function App() {
-  const { isAuth } = useAuth("email@test.com", "1234566");
   const [oswaldLoaded] = useOswald({
     Oswald_400Regular,
     Oswald_700Bold,
@@ -35,22 +34,18 @@ export default function App() {
   if (!latoLoaded || !oswaldLoaded) {
     return null;
   }
-  console.log("👉", isAuth);
-  // if (isAuth) {
-  //   console.log("👉", "AUTHENTICATED ✅");
-  // } else {
-  //   console.log("👉", "not");
-  // }
   return (
-    <LocationProvider>
-      <FavoritesProvider>
-        <RestaurantsProvider>
-          <ThemeProvider theme={theme}>
-            <Navigation />
-            <ExpoStatusBar style="auto" />
-          </ThemeProvider>
-        </RestaurantsProvider>
-      </FavoritesProvider>
-    </LocationProvider>
+    <AuthProvider>
+      <LocationProvider>
+        <FavoritesProvider>
+          <RestaurantsProvider>
+            <ThemeProvider theme={theme}>
+              <Navigation />
+              <ExpoStatusBar style="auto" />
+            </ThemeProvider>
+          </RestaurantsProvider>
+        </FavoritesProvider>
+      </LocationProvider>
+    </AuthProvider>
   );
 }
