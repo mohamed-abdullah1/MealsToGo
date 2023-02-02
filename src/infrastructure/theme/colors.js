@@ -3,6 +3,7 @@ const colors = {
     primary: "#2182BD",
     secondary: "#5282BD",
     muted: "#C6DAF7",
+    purple: "#6c63ff",
   },
   ui: {
     primary: "#262626",
