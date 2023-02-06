@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import BgComponent from "../components/bg.component";
 import { Btn, Input, Wrapper } from "../components/loginStyles.component";
 import { AuthContext } from "../../../services/authentication/auth.context";
+import { ErrorText } from "../components/styles.component";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -31,6 +32,7 @@ const LoginScreen = ({ navigation }) => {
           secure={true}
           textContentType="password"
         />
+        <ErrorText>{error ? error : null}</ErrorText>
         <Btn icon="lock-open-outline" loading={loading} onPress={loginHandler}>
           Login
         </Btn>

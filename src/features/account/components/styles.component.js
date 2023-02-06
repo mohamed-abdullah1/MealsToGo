@@ -26,3 +26,8 @@ export const BtnBox = styled(Button)`
   padding: 8px;
   flex: 1;
 `;
+export const ErrorText = styled.Text`
+  color: red;
+  margin-top: 8px;
+  font-weight: 800;
+`;

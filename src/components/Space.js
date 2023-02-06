@@ -13,10 +13,10 @@ const sizeVariant = {
   large: 3,
 };
 const SpacerView = styled.View`
-  ${(props) => positionVariants[props.p]}:${(props) => +props.size};
+  ${(props) => positionVariants[props.p]}:${(props) => sizeVariant[props.s]};
 `;
 
-export const Spacer = ({ position = "left", size = "8", children }) => {
+export const Spacer = ({ position = "left", size = "small", children }) => {
   return (
     <SpacerView p={position} s={size}>
       {children}

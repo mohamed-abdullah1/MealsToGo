@@ -4,8 +4,7 @@ const defaultText = (theme) => `
     font-size : ${theme?.fontSizes.body};
     font-weight:${theme?.fontWeights.regular};
     flex-wrap:wrap;
-    margin:0;
-    padding:0;
+
 `;
 
 const error = (theme) => `

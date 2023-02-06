@@ -87,7 +87,7 @@ const Restaurant = ({ navigation }) => {
           value={keyword}
           onChangeText={onSearch}
           loading={true}
-          style={{ margin: 4 }}
+          // style={{ margin: 4 }}
           icon={favorites.length > 0 ? "heart" : "heart-outline"}
           onIconPress={() => setViewList((prev) => !prev)}
         />
