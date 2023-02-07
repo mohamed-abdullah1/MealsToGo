@@ -98,11 +98,6 @@ const Restaurant = ({ navigation }) => {
           <ActivityIndicator size={50} color="tomato" />
         </LoadingContainer>
       ) : (
-        // <FlatListContainer
-        //   data={restaurants}
-        //   keyExtractor={(item) => item.placeId}
-        //   renderItem={memoizedRenderItem}
-        // />
         <RestaurantsWrapper>
           {restaurants.map((res) => (
             <Pressable
