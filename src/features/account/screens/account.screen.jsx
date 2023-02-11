@@ -7,19 +7,13 @@ import {
   Box,
   BtnBox,
 } from "../components/styles.component";
-import LottieView from "lottie-react-native";
 
 const AccountScreen = ({ navigation }) => {
   const handlePress = (dest) => navigation.navigate(dest);
   return (
     <BgComponent>
       <Container>
-        <WaterMillion>
-          {/* <LottieView
-            autoPlay
-            source={require("../../../../assets/animation.json")}
-          /> */}
-        </WaterMillion>
+        <WaterMillion></WaterMillion>
         <Header>Meals To Go </Header>
         <Box>
           <BtnBox

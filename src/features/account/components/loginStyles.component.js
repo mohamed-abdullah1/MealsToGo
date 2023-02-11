@@ -3,7 +3,6 @@ import { Button, TextInput } from "react-native-paper";
 import colors from "../../../infrastructure/theme/colors";
 export const Wrapper = styled.View`
   flex: 1;
-  /* justify-content: center; */
   align-items: center;
   margin-top: -128px;
 `;
